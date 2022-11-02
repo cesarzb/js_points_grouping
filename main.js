@@ -71,6 +71,7 @@ function printer(){
 }
 
 function countGroups(){
+    updateButton(0);
     for(i in points){
         for(j in centroids){
             if(distanceFromCentroid(i, j) < distanceFromCentroid(i, points[i][2])){
@@ -83,6 +84,7 @@ function countGroups(){
 }
 
 function countCentroids(){
+    updateButton(1);
     for(j in centroids){
         counter = 0;
         avgX = 0;
@@ -148,6 +150,18 @@ function distanceFromCentroid(i, j){
     distance += Math.pow(points[i][1] - centroids[j][1], 2);
     distance = Math.sqrt(distance);
     return distance;
+}
+
+function updateButton(type){
+    button = document.getElementById("center-counter");
+    console.log(button.onclick);
+    if(type == 0){
+        button.onclick = function () { countCentroids(); };
+        button.innerHTML = "Count Centroids";
+    } else{
+        button.onclick = function () { countGroups(); };
+        button.innerHTML = "Count Groups";
+    }
 }
 
 window.onload = starter;
