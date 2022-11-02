@@ -1,0 +1,30 @@
+.point{
+    background-color: black;
+    height: 5px;
+    width: 5px;
+    float: left;
+    border-radius: 5px;
+}
+
+#main-container{
+    padding: 50px;
+    background-color: aliceblue;
+    height: 600px;
+    width: 600px;
+    float: left;
+    border-radius: 15px;
+}
+
+#center-counter{
+    background-color: aliceblue;
+    float: left;
+    border-radius: 5px;
+    padding: 5px;
+    margin-left: 5px;
+}
+
+#everything{
+    background-color: navy;
+    padding-top: auto;
+    padding-left: auto;
+}
