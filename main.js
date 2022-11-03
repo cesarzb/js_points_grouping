@@ -1,5 +1,7 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
+const sizeX = 500;
+const sizeY = 500;
 
 let points = [];
 let centroids = [];
@@ -11,21 +13,56 @@ let colors = [
     "rgb(78, 147, 191)",
 ];
 
+// let colors = [
+//     [255 * Math.random(), 255 * Math.random(), 255 * Math.random()],
+// ];
+
 function degToRad(degrees) {
     return degrees * Math.PI / 180;
   }  
 
-function starter(){    
+function starter(){   
+    updateButton(1); 
     generate();
     printer();
 }
 
+function scrambleCentroids(){
+    updateButton(1);
+    generateCentroids();
+    printer();
+}
+
 function generate(){
-    for(let i = 0; i < 20; i++){
-        points[i] = [ Math.random(), Math.random(), 4];
+    // grouping points two make them less random (easier to see groups visually)
+    generateCentroids();
+
+    let c, r1, r2;
+
+    for(let j = 0; j < 20; j++){
+        c = j % 4;
+        r1 = Math.random() * 0.1;
+        r2 = Math.random() * 0.1;
+        points[j] = [ 
+            //centroids[i][0] + (1.0 - (centroids[i][0]+Math.random() * 0.1));
+            // 1.0 - Math.random() * 0.1;
+            (centroids[c][0] + r1) > 1.0 ? (centroids[c][0] - r1) : (centroids[c][0] + r1),
+            (centroids[c][1] + r2) > 1.0 ? (centroids[c][1] - r2) : (centroids[c][1] + r2),
+            // centroids[i][0] + Math.random() - 0.5,
+            // centroids[i][1] + Math.random() - 0.5,
+            centroids.length, 
+        ];
+        if(points[j][0] > 1.0 || points[j][0] > 1.0){
+            alert('Ten jebany śmieć jest większy niz jeden!!!');
+        }
     }
+
+    generateCentroids();
+}
+
+function generateCentroids(){
     for(let i = 0; i < 4; i++){
-        centroids[i] = [ Math.random(), Math.random(), false]; 
+        centroids[i] = [ Math.random(), Math.random(), false ]; 
     }
 }
 
@@ -37,12 +74,12 @@ function printer(){
     for(i in points){
         ctx.fillStyle = "rgb(0, 0, 0)";
         ctx.beginPath();
-        ctx.arc(points[i][0] * 500, points[i][1] * 500, 3, degToRad(0), degToRad(360), false);
+        ctx.arc(points[i][0] * sizeX, points[i][1] * sizeY, 3, degToRad(0), degToRad(360), false);
         ctx.fill();
 
         ctx.fillStyle = colors[points[i][2]];
         ctx.beginPath();
-        ctx.arc(points[i][0] * 500, points[i][1] * 500, 2, degToRad(0), degToRad(360), false);
+        ctx.arc(points[i][0] * sizeX, points[i][1] * sizeY, 2, degToRad(0), degToRad(360), false);
         ctx.fill();
 
         // debug
@@ -55,12 +92,12 @@ function printer(){
     for(i in centroids){
         ctx.fillStyle = "rgb(0, 0, 0)";
         ctx.beginPath();
-        ctx.arc(centroids[i][0] * 500, centroids[i][1] * 500, 5, degToRad(0), degToRad(360), false);
+        ctx.arc(centroids[i][0] * sizeX, centroids[i][1] * sizeY, 5, degToRad(0), degToRad(360), false);
         ctx.fill();
 
         ctx.fillStyle = colors[i];
         ctx.beginPath();
-        ctx.arc(centroids[i][0] * 500, centroids[i][1] * 500, 4, degToRad(0), degToRad(360), false);
+        ctx.arc(centroids[i][0] * sizeX, centroids[i][1] * sizeY, 4, degToRad(0), degToRad(360), false);
         ctx.fill();
 
         // debug
